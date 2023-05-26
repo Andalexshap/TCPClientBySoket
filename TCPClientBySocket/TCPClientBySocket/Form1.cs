@@ -85,5 +85,23 @@ namespace TCPClientBySocket
                     break;
             }
         }
+        /*
+                private void button1_Click(object sender, EventArgs e)
+                {
+                    var car = new Car
+                    {
+                        Id = Guid.NewGuid(),
+                        Manufacturer = "NISSAN",
+                        Model = "nISSAN",
+                        EngineCapacity = 1.8M,
+                        DoorsCount = 0,
+                        Year = 2050
+                    };
+
+                    var stringCar = car.ToString();
+
+                    _tcpService.ConvertToModelCar(stringCar);
+                }
+        */
     }
 }

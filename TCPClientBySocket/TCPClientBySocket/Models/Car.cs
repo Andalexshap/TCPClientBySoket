@@ -28,10 +28,10 @@
         public override string ToString()
         {
             return $"Производитель: {Manufacturer};" +
-                   $"Модель:        {Model};" +
-                   $"Год:           {Year};" +
-                   $"Объем:         {EngineCapacity};" +
-                   $"Кол-во дверей: {DoorsCount}";
+                   $"Модель: {Model};" +
+                   $"Год: {Year};" +
+                   $"Объем: {EngineCapacity};" +
+                   $"Кол-во дверей: {DoorsCount};";
         }
 
         public override int GetHashCode()

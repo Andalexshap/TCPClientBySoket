@@ -12,7 +12,7 @@ namespace TCPClientBySocket.Services
 
         public TcpService(string host)
         {
-            _host = host;   
+            _host = host;
             _tcpClient = new TcpClient();
         }
 
@@ -97,13 +97,32 @@ namespace TCPClientBySocket.Services
 
         private Car ConvertToModelCar(string message)
         {
-            var car = new Car();
+            var a = message.Split(";");
+
+            var car = new Car
+            {
+                Id = Guid.Empty,
+                Manufacturer = a[0].Split(":")[1].TrimStart(),
+                Model = a[1].Split(":")[1].TrimStart(),
+                Year = int.TryParse(a[2].Split(":")[1].TrimStart(), out var year) ? year : 0,
+                EngineCapacity = decimal.TryParse(a[3].Split(":")[1].TrimStart(), out var caparacity) ? caparacity : 0,
+                DoorsCount = int.TryParse(a[4].Split(":")[1].TrimStart(), out var count) ? count : 0,
+
+            };
             return car;
         }
 
         private Cars ConvertToModelCars(string message)
         {
             var cars = new Cars();
+            var carsArray = message.Split("|");
+
+            foreach (var currentCar in carsArray)
+            {
+                var car = ConvertToModelCar(currentCar);
+                cars.ListCars.Add(car);
+            }
+
             return cars;
         }
     }
