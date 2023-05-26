@@ -32,13 +32,7 @@ namespace TCPClientBySocket
 
         private async void buttonResponse_Click(object sender, EventArgs e)
         {
-            var key = Guid.Empty;
-            Guid.TryParse(textBoxRequest.Text, out key);
-            var response = "TODO";
-            if (!response.Any())
-            {
-                textBoxResponse.Text
-            }
+            
 
         }
         private void ChangedStatusLabel(StateEnum state)
