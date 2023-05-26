@@ -114,7 +114,7 @@ namespace TCPClientBySocket.Services
 
         private Cars ConvertToModelCars(string message)
         {
-            var cars = new Cars();
+            var cars = new Cars { ListCars = new List<Car>() };
             var carsArray = message.Split("|");
 
             foreach (var currentCar in carsArray)

@@ -36,7 +36,6 @@
             this.textBoxResponse = new System.Windows.Forms.TextBox();
             this.textBoxRequest = new System.Windows.Forms.TextBox();
             this.buttonRequest = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelStatus
@@ -123,23 +122,12 @@
             this.buttonRequest.Visible = false;
             this.buttonRequest.Click += new System.EventHandler(this.buttonResponse_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 68);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(264, 323);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            //this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(288, 450);
             this.ControlBox = false;
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonRequest);
             this.Controls.Add(this.textBoxRequest);
             this.Controls.Add(this.textBoxResponse);
@@ -166,6 +154,5 @@
         private TextBox textBoxResponse;
         private TextBox textBoxRequest;
         private Button buttonRequest;
-        private Button button1;
     }
 }
