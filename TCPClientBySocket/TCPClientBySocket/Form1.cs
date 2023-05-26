@@ -18,16 +18,18 @@ namespace TCPClientBySocket
             Environment.Exit(0);
         }
 
-        private void buttonConnect_Click(object sender, EventArgs e)
+        private async void buttonConnect_Click(object sender, EventArgs e)
         {
-            var state = _tcpService.Connect().GetAwaiter().GetResult();
+            var state = await _tcpService.Connect();
 
             ChangedStatusLabel(state);
         }
 
-        private void buttonStop_Click(object sender, EventArgs e)
+        private async void buttonStop_Click(object sender, EventArgs e)
         {
-            _tcpService.Disconnect();
+            var state = await _tcpService.Disconnect();
+
+            ChangedStatusLabel(state);
         }
 
         private async void buttonResponse_Click(object sender, EventArgs e)
@@ -47,7 +49,7 @@ namespace TCPClientBySocket
                 //textBoxResponse.Text
             }
         }
-        private void ChangedStatusLabel(StateEnum state)
+        private async void ChangedStatusLabel(StateEnum state)
         {
             switch (state)
             {
