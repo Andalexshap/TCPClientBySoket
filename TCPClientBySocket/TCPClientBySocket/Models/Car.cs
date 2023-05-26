@@ -27,10 +27,10 @@
 
         public override string ToString()
         {
-            return $"Производитель: {Manufacturer};\n" +
-                   $"Модель:        {Model};\n" +
-                   $"Год:           {Year};\n" +
-                   $"Объем:         {EngineCapacity};\n" +
+            return $"Производитель: {Manufacturer};" +
+                   $"Модель:        {Model};" +
+                   $"Год:           {Year};" +
+                   $"Объем:         {EngineCapacity};" +
                    $"Кол-во дверей: {DoorsCount}";
         }
 
