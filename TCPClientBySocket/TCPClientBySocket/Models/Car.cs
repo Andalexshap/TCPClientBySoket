@@ -33,10 +33,5 @@
                    $"Объем: {EngineCapacity};" +
                    $"Кол-во дверей: {DoorsCount};";
         }
-
-        public override int GetHashCode()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

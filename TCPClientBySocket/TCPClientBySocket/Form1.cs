@@ -7,10 +7,13 @@ namespace TCPClientBySocket
     {
         private readonly TcpService _tcpService;
         private readonly string _host = "127.0.0.1";
+        private readonly XMLService _xmlService;
+
         public Client()
         {
             InitializeComponent();
             _tcpService = new TcpService(_host);
+            _xmlService = new XMLService();
 
             //инициализация таблицы
             InitDataGrid();
@@ -43,10 +46,13 @@ namespace TCPClientBySocket
                 var car = _tcpService.GetCarById(id).GetAwaiter().GetResult();
 
                 SetColumnGrid(car);
+                _xmlService.CreateXmlFromModel(new Cars { ListCars = new List<Car> { car } });
                 return;
             }
 
             var cars = _tcpService.GetAllCars().GetAwaiter().GetResult();
+
+            _xmlService.CreateXmlFromModel(cars);
 
             SetColumnsGrid(cars);
         }
