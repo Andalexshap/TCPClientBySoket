@@ -33,9 +33,10 @@
             this.buttonConnect = new System.Windows.Forms.Button();
             this.buttonExit = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
-            this.textBoxResponse = new System.Windows.Forms.TextBox();
             this.textBoxRequest = new System.Windows.Forms.TextBox();
             this.buttonRequest = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelStatus
@@ -94,15 +95,6 @@
             this.buttonStop.Visible = false;
             this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
             // 
-            // textBoxResponse
-            // 
-            this.textBoxResponse.Enabled = false;
-            this.textBoxResponse.Location = new System.Drawing.Point(12, 68);
-            this.textBoxResponse.Multiline = true;
-            this.textBoxResponse.Name = "textBoxResponse";
-            this.textBoxResponse.Size = new System.Drawing.Size(264, 323);
-            this.textBoxResponse.TabIndex = 5;
-            // 
             // textBoxRequest
             // 
             this.textBoxRequest.Location = new System.Drawing.Point(12, 39);
@@ -122,15 +114,25 @@
             this.buttonRequest.Visible = false;
             this.buttonRequest.Click += new System.EventHandler(this.buttonResponse_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(5, 68);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.Size = new System.Drawing.Size(271, 314);
+            this.dataGridView1.TabIndex = 8;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
             // Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(288, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.buttonRequest);
             this.Controls.Add(this.textBoxRequest);
-            this.Controls.Add(this.textBoxResponse);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.buttonConnect);
@@ -139,6 +141,7 @@
             this.Name = "Client";
             this.ShowIcon = false;
             this.Text = "Client";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,8 +154,8 @@
         private Button buttonConnect;
         private Button buttonExit;
         private Button buttonStop;
-        private TextBox textBoxResponse;
         private TextBox textBoxRequest;
         private Button buttonRequest;
+        public DataGridView dataGridView1;
     }
 }
