@@ -32,8 +32,20 @@ namespace TCPClientBySocket
 
         private async void buttonResponse_Click(object sender, EventArgs e)
         {
-            
+            var id = textBoxRequest.Text;
+            if (!string.IsNullOrEmpty(id))
+            {
+                var car = _tcpService.GetCarById(id).GetAwaiter().GetResult();
+                //Отправка id
+            }
 
+            var cars = _tcpService.GetAllCars().GetAwaiter().GetResult();
+
+            var response = "TODO";
+            if (!response.Any())
+            {
+                //textBoxResponse.Text
+            }
         }
         private void ChangedStatusLabel(StateEnum state)
         {
