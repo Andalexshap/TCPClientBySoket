@@ -109,6 +109,7 @@
             this.textBoxRequest.Name = "textBoxRequest";
             this.textBoxRequest.Size = new System.Drawing.Size(171, 23);
             this.textBoxRequest.TabIndex = 6;
+            this.textBoxRequest.Visible = false;
             // 
             // buttonRequest
             // 
@@ -118,6 +119,7 @@
             this.buttonRequest.TabIndex = 7;
             this.buttonRequest.Text = "Request";
             this.buttonRequest.UseVisualStyleBackColor = true;
+            this.buttonRequest.Visible = false;
             this.buttonRequest.Click += new System.EventHandler(this.buttonResponse_Click);
             // 
             // Client
