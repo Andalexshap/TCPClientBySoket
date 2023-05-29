@@ -9,6 +9,8 @@ namespace TCPClientBySocket
         private readonly string _host = "127.0.0.1";
         private readonly XMLService _xmlService;
 
+        private Cars _cars = new Cars();
+
         public Client()
         {
             InitializeComponent();
@@ -40,21 +42,32 @@ namespace TCPClientBySocket
 
         private async void buttonResponse_Click(object sender, EventArgs e)
         {
+            DataGridClear();
+
             var id = textBoxRequest.Text;
             if (!string.IsNullOrEmpty(id))
             {
                 var car = _tcpService.GetCarById(id).GetAwaiter().GetResult();
 
                 SetColumnGrid(car);
-                _xmlService.CreateXmlFromModel(new Cars { ListCars = new List<Car> { car } });
+                _cars = new Cars { ListCars = new List<Car> { car } };
                 return;
             }
 
             var cars = _tcpService.GetAllCars().GetAwaiter().GetResult();
 
-            _xmlService.CreateXmlFromModel(cars);
+            _cars = cars;
 
             SetColumnsGrid(cars);
+
+            buttonSave.Visible = true;
+        }
+
+        private void DataGridClear()
+        {
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Clear();
+            InitDataGrid();
         }
 
         private void SetColumnsGrid(Cars cars)
@@ -94,14 +107,14 @@ namespace TCPClientBySocket
             DataGridViewTextBoxColumn column1 = new DataGridViewTextBoxColumn();
             column1.Name = "Year";
             column1.HeaderText = "Year";
+            DataGridViewTextBoxColumn column2 = new DataGridViewTextBoxColumn();
+            column2.Name = "EngineCapacity";
+            column2.HeaderText = "EngineCapacity";
             DataGridViewTextBoxColumn column3 = new DataGridViewTextBoxColumn();
-            column1.Name = "EngineCapacity";
-            column1.HeaderText = "EngineCapacity";
-            DataGridViewTextBoxColumn column4 = new DataGridViewTextBoxColumn();
-            column1.Name = "DoorsCount";
-            column1.HeaderText = "DoorsCount";
+            column3.Name = "DoorsCount";
+            column3.HeaderText = "DoorsCount";
             //המבאגכÿול סעמכבצû
-            dataGridView1.Columns.AddRange(column0, column1, column3, column4);
+            dataGridView1.Columns.AddRange(column0, column1, column2, column3);
         }
 
 
@@ -144,27 +157,9 @@ namespace TCPClientBySocket
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void buttonSave_Click(object sender, EventArgs e)
         {
-
+            _xmlService.CreateXmlFromModel(_cars);
         }
-        /*
-       private void button1_Click(object sender, EventArgs e)
-       {
-           var car = new Car
-           {
-               Id = Guid.NewGuid(),
-               Manufacturer = "NISSAN",
-               Model = "nISSAN",
-               EngineCapacity = 1.8M,
-               DoorsCount = 0,
-               Year = 2050
-           };
-
-           var stringCar = car.ToString();
-
-           _tcpService.ConvertToModelCar(stringCar);
-       }
-*/
     }
 }

@@ -9,9 +9,16 @@ namespace TCPClientBySocket.Services
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(Cars));
 
-            using (FileStream fs = new FileStream("Cars.xml", FileMode.OpenOrCreate))
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "xml files(*.xml)|*.xml|All files(*.*)|*.*";
+            if (saveFile.ShowDialog() == DialogResult.OK)
             {
-                xmlSerializer.Serialize(fs, cars);
+                using (FileStream fs = new FileStream(saveFile.FileName, FileMode.OpenOrCreate))
+                {
+                    xmlSerializer.Serialize(fs, cars);
+                }
+
+                MessageBox.Show("Файл сохранен");
             }
         }
     }

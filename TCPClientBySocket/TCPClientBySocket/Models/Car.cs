@@ -1,7 +1,10 @@
-﻿namespace TCPClientBySocket.Models
+﻿using System.Xml.Serialization;
+
+namespace TCPClientBySocket.Models
 {
     public class Car
     {
+        [XmlIgnore]
         public Guid Id { get; set; }
         public string Model { get; set; }
         public int Year { get; set; }
@@ -30,5 +33,7 @@
                    $"Объем: {EngineCapacity};" +
                    $"Кол-во дверей: {DoorsCount};";
         }
+
+
     }
 }

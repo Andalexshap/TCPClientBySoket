@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Headers;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.Text;
 using TCPClientBySocket.Models;
 
@@ -102,19 +101,19 @@ namespace TCPClientBySocket.Services
             var car = new Car();
             var a = message.Split(" ");
 
-            if (message.StartsWith("0x02 ")) 
-            { 
+            if (message.StartsWith("0x02 "))
+            {
                 message = message.Substring(5);
                 if (message.Length == 0)
                 {
                     return car;
                 }
             }
-            
+
             var byteList = message.Split(" ").ToList();
 
             var countProperties = 0;
-            
+
             int.TryParse(byteList[0].Replace("0x", ""), out countProperties);
 
             byteList.Remove(byteList[0]);
@@ -127,30 +126,31 @@ namespace TCPClientBySocket.Services
                     byteList.Remove(byteList[0]);
                     car.Model = ConvertHexToStringModel(byteList);
                 }
-                if (byteList[0] == "0x12" && byteList.Contains("0x13"))
+                else if (byteList[0] == "0x12" && byteList.Contains("0x13"))
                 {
                     byteList.Remove(byteList[0]);
                     car.Year = ConvertHexToIntYear(byteList);
                 }
-                if(byteList[0] == "0x13")
+                else if (byteList[0] == "0x13")
                 {
                     byteList.Remove(byteList[0]);
                     car.EngineCapacity = ConvertHexToFloat(byteList);
                 }
-                if (byteList[0] == "0x12")
+                else if (byteList[0] == "0x12")
                 {
                     byteList.Remove(byteList[0]);
                     car.DoorsCount = ConvertHexToIntDoors(byteList);
                 }
             }
 
-            
+
             return car;
         }
 
         private Cars ConvertToModelCars(string message)
         {
             var cars = new Cars { ListCars = new List<Car>() };
+            message = message.Substring(5);
             var carsArray = message.Split("0x02 ");
 
             foreach (var currentCar in carsArray)
@@ -190,7 +190,7 @@ namespace TCPClientBySocket.Services
         private int ConvertHexToIntYear(List<string> byteList)
         {
             string stringHexYear = byteList[0].Replace("0x", "") + byteList[1].Replace("0x", "");
-            
+
             byteList.Remove(byteList[0]);
             byteList.Remove(byteList[0]);
 
