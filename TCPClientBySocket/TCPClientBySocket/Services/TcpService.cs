@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Net.Http.Headers;
+using System.Net.Sockets;
 using System.Text;
 using TCPClientBySocket.Models;
 
@@ -87,7 +88,7 @@ namespace TCPClientBySocket.Services
             }
 
             var responseServer = Encoding.UTF8.GetString(response.ToArray());
-            var car = ConvertToModelCar(responseServer);
+            var car = ConvertToModelCar(responseServer.Trim());
 
             return car;
 
@@ -95,27 +96,62 @@ namespace TCPClientBySocket.Services
             await Task.Delay(1000);
         }
 
-        private Car ConvertToModelCar(string message)
+        #region HexToPropertyConvertation
+        public Car ConvertToModelCar(string message)
         {
-            var a = message.Split(";");
+            var car = new Car();
+            var a = message.Split(" ");
 
-            var car = new Car
+            if (message.StartsWith("0x02 ")) 
+            { 
+                message = message.Substring(5);
+                if (message.Length == 0)
+                {
+                    return car;
+                }
+            }
+            
+            var byteList = message.Split(" ").ToList();
+
+            var countProperties = 0;
+            
+            int.TryParse(byteList[0].Replace("0x", ""), out countProperties);
+
+            byteList.Remove(byteList[0]);
+
+
+            for (int i = 0; i < countProperties && byteList.Count != 0; i++)
             {
-                Id = Guid.Empty,
-                Manufacturer = a[0].Split(":")[1].TrimStart(),
-                Model = a[1].Split(":")[1].TrimStart(),
-                Year = int.TryParse(a[2].Split(":")[1].TrimStart(), out var year) ? year : 0,
-                EngineCapacity = decimal.TryParse(a[3].Split(":")[1].TrimStart(), out var caparacity) ? caparacity : 0,
-                DoorsCount = int.TryParse(a[4].Split(":")[1].TrimStart(), out var count) ? count : 0,
+                if (byteList[0] == "0x09")
+                {
+                    byteList.Remove(byteList[0]);
+                    car.Model = ConvertHexToStringModel(byteList);
+                }
+                if (byteList[0] == "0x12" && byteList.Contains("0x13"))
+                {
+                    byteList.Remove(byteList[0]);
+                    car.Year = ConvertHexToIntYear(byteList);
+                }
+                if(byteList[0] == "0x13")
+                {
+                    byteList.Remove(byteList[0]);
+                    car.EngineCapacity = ConvertHexToFloat(byteList);
+                }
+                if (byteList[0] == "0x12")
+                {
+                    byteList.Remove(byteList[0]);
+                    car.DoorsCount = ConvertHexToIntDoors(byteList);
+                }
+            }
 
-            };
+            
             return car;
         }
 
         private Cars ConvertToModelCars(string message)
         {
             var cars = new Cars { ListCars = new List<Car>() };
-            var carsArray = message.Split("|");
+            var carsArray = message.Split("0x02 ");
 
             foreach (var currentCar in carsArray)
             {
@@ -125,5 +161,68 @@ namespace TCPClientBySocket.Services
 
             return cars;
         }
+
+        private string ConvertHexToStringModel(List<string> byteList)
+        {
+            var count = 0;
+            int.TryParse(byteList[0].Replace("0x", ""), out count);
+            byteList.Remove(byteList[0]);
+
+            var stringHex = string.Empty;
+
+            for (int i = 0; i < count; i++)
+            {
+                stringHex += byteList[0].Replace("0x", "");
+                byteList.Remove(byteList[0]);
+            }
+
+            string[] hexBytes = new string[stringHex.Length / 2];
+            for (int i = 0; i < hexBytes.Length; i++)
+            {
+                hexBytes[i] = stringHex.Substring(i * 2, 2);
+            }
+            byte[] resultBytes = hexBytes.Select(value => Convert.ToByte(value, 16)).ToArray();
+            string result = Encoding.UTF8.GetString(resultBytes);
+
+            return result;
+        }
+
+        private int ConvertHexToIntYear(List<string> byteList)
+        {
+            string stringHexYear = byteList[0].Replace("0x", "") + byteList[1].Replace("0x", "");
+            
+            byteList.Remove(byteList[0]);
+            byteList.Remove(byteList[0]);
+
+            return Convert.ToInt32(stringHexYear, 16);
+        }
+
+        private float ConvertHexToFloat(List<string> byteList)
+        {
+            var listByte = new List<byte>();
+
+            for (int i = 0; i < 4; i++)
+            {
+                listByte.Add(Convert.ToByte(byteList[0], 16));
+                byteList.Remove(byteList[0]);
+            }
+            var bytes = listByte.ToArray();
+
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes); // Convert big endian to little endian
+            }
+
+            return BitConverter.ToSingle(bytes, 0);
+        }
+        private int ConvertHexToIntDoors(List<string> byteList)
+        {
+            string stringHexDoors = byteList[0].Replace("0x", "");
+
+            byteList.Remove(byteList[0]);
+
+            return Convert.ToInt32(stringHexDoors, 16);
+        }
+        #endregion
     }
 }

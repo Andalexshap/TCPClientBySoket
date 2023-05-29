@@ -67,13 +67,11 @@ namespace TCPClientBySocket
 
         private void SetColumnGrid(Car car)
         {
-            DataGridViewCell manufacturer = new DataGridViewTextBoxCell();
             DataGridViewCell model = new DataGridViewTextBoxCell();
             DataGridViewCell year = new DataGridViewTextBoxCell();
             DataGridViewCell engineCapacity = new DataGridViewTextBoxCell();
             DataGridViewCell doorsCount = new DataGridViewTextBoxCell();
 
-            manufacturer.Value = car.Manufacturer;
             model.Value = car.Model;
             year.Value = car.Year;
             engineCapacity.Value = car.EngineCapacity;
@@ -81,32 +79,29 @@ namespace TCPClientBySocket
 
             DataGridViewRow row = new DataGridViewRow();
             //добавление €чеек в строку
-            row.Cells.AddRange(manufacturer, model, year, engineCapacity, doorsCount);
+            row.Cells.AddRange(model, year, engineCapacity, doorsCount);
             //добавление строки в таблицу
             dataGridView1.Rows.Add(row);
         }
 
         private void InitDataGrid()
         {
+            //1 столбец, текстовый
             DataGridViewTextBoxColumn column0 = new DataGridViewTextBoxColumn();
-            column0.Name = "Manufacturer";
-            column0.HeaderText = "Manufacturer";
-            //2 столбец, текстовый
+            column0.Name = "Model";
+            column0.HeaderText = "Model";
+            //2 столбец,
             DataGridViewTextBoxColumn column1 = new DataGridViewTextBoxColumn();
-            column1.Name = "Model";
-            column1.HeaderText = "Model";
-            //3 столбец,
-            DataGridViewTextBoxColumn column2 = new DataGridViewTextBoxColumn();
-            column2.Name = "Year";
-            column2.HeaderText = "Year";
+            column1.Name = "Year";
+            column1.HeaderText = "Year";
             DataGridViewTextBoxColumn column3 = new DataGridViewTextBoxColumn();
-            column2.Name = "EngineCapacity";
-            column2.HeaderText = "EngineCapacity";
+            column1.Name = "EngineCapacity";
+            column1.HeaderText = "EngineCapacity";
             DataGridViewTextBoxColumn column4 = new DataGridViewTextBoxColumn();
-            column2.Name = "DoorsCount";
-            column2.HeaderText = "DoorsCount";
+            column1.Name = "DoorsCount";
+            column1.HeaderText = "DoorsCount";
             //добавл€ем столбцы
-            dataGridView1.Columns.AddRange(column0, column1, column2, column3, column4);
+            dataGridView1.Columns.AddRange(column0, column1, column3, column4);
         }
 
 
