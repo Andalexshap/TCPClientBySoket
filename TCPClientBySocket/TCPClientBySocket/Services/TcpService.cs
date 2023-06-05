@@ -49,13 +49,13 @@ namespace TCPClientBySocket.Services
         {
             // буфер для входящих данных
             var response = new List<byte>();
-            int bytesRead = 10; // для считывания байтов из потока
+            int bytesRead = 50; // для считывания байтов из потока
 
             byte[] data = Encoding.UTF8.GetBytes("cars" + '\n');
 
             await _stream.WriteAsync(data);
 
-            while ((bytesRead = _stream.ReadByte()) != 0x00)
+            while ((bytesRead = _stream.ReadByte()) != 0x10)
             {
                 // добавляем в буфер
                 response.Add((byte)bytesRead);
@@ -75,7 +75,7 @@ namespace TCPClientBySocket.Services
 
             await _stream.WriteAsync(data);
 
-            while ((bytesRead = _stream.ReadByte()) != 0x00)
+            while ((bytesRead = _stream.ReadByte()) != 0x10)
             {
                 // добавляем в буфер
                 response.Add((byte)bytesRead);
