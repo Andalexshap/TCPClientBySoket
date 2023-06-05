@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 using TCPClientBySocket.Helpers;
 
 namespace TCPClientBySocket.Models
@@ -9,9 +8,9 @@ namespace TCPClientBySocket.Models
         [XmlIgnore]
         public Guid Id { get; set; }
         public string Model { get; set; }
-        public int Year { get; set; }
+        public ushort Year { get; set; }
         public float EngineCapacity { get; set; }
-        public int DoorsCount { get; set; }
+        public ushort DoorsCount { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -36,8 +35,8 @@ namespace TCPClientBySocket.Models
                    $"Кол-во дверей: {DoorsCount};";
         }
 
-        public static Car ConvertToModel(List<byte> bytes) 
+        public static Car ConvertToModel(List<byte> bytes)
             => BinarySerializer.Deserialize(bytes);
-        
+
     }
 }

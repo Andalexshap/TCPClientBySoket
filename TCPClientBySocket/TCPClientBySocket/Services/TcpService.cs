@@ -69,7 +69,7 @@ namespace TCPClientBySocket.Services
         public async Task<Car> GetCarById(string id)
         {
             var response = new List<byte>();
-            int bytesRead = 10; // для считывания байтов из потока
+            int bytesRead = 50; // для считывания байтов из потока
 
             byte[] data = Encoding.UTF8.GetBytes($"car:{id}" + '\n');
 
@@ -80,7 +80,7 @@ namespace TCPClientBySocket.Services
                 // добавляем в буфер
                 response.Add((byte)bytesRead);
             }
-            
+
             var car = Car.ConvertToModel(response);
 
             return car;
