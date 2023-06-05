@@ -55,15 +55,13 @@ namespace TCPClientBySocket.Services
 
             await _stream.WriteAsync(data);
 
-            while ((bytesRead = _stream.ReadByte()) != '\n')
+            while ((bytesRead = _stream.ReadByte()) != 0x00)
             {
                 // добавляем в буфер
                 response.Add((byte)bytesRead);
             }
 
-            var responseServer = Encoding.UTF8.GetString(response.ToArray());
-
-            var cars = Cars.ConvertToModel(responseServer);
+            var cars = Cars.ConvertToModel(response);
 
             return cars;
         }
@@ -77,14 +75,13 @@ namespace TCPClientBySocket.Services
 
             await _stream.WriteAsync(data);
 
-            while ((bytesRead = _stream.ReadByte()) != '\n')
+            while ((bytesRead = _stream.ReadByte()) != 0x00)
             {
                 // добавляем в буфер
                 response.Add((byte)bytesRead);
             }
-
-            var responseServer = Encoding.UTF8.GetString(response.ToArray());
-            var car = Car.ConvertToModel(responseServer.Trim());
+            
+            var car = Car.ConvertToModel(response);
 
             return car;
         }
